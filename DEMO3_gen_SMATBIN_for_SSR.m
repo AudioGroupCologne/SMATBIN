@@ -45,7 +45,7 @@ head_orientations = get_sampling_grid('horizontal'); % Render 360 horizontal hea
 
 %% Calculate SMATBIN filters for the SMA configuration
 
-[bin_sma_fir_l, bin_sma_fir_r, info] = calc_smatbin_filter(grid_data_sma, N_grid, radius, ...
+[smatbin_l, smatbin_r, info] = calc_smatbin_filter(grid_data_sma, N_grid, radius, ...
                                         smatbin_filter_length, fs, head_orientations, array_body, soft_limit, sofia_hp);
 
 %% SSR export 
@@ -57,7 +57,7 @@ if ~exist(path, 'dir')
 end
 
 % Export as SSR filters:
-smatbin_ssr = cat(4, bin_sma_fir_l, bin_sma_fir_r); % Bring to shape [Mic x samples x head orientation x ears]
+smatbin_ssr = cat(4, smatbin_l, smatbin_r); % Bring to shape [Mic x samples x head orientation x ears]
 export_sma_firs_SSR(smatbin_ssr, fs, sprintf('%s/demo_N%d', path, N_grid));
 
 %% Simulate a sound field with plane waves and convolve with test signal
