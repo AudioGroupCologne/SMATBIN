@@ -1,7 +1,6 @@
 ## SMATBIN - Spherical Microphone Array To Binaural
 This repository contains the Matlab implementation of the SMATBIN filter approach, proposed in:  
-> J.M. Arend, T. Lübeck, and C. Pörschmann, "Efficient binaural rendering of spherical microphone array data by linear filtering",  
-> Submitted for publication
+> J.M. Arend\*, T. Lübeck\*, and C. Pörschmann\*, "Efficient binaural rendering of spherical microphone array data by linear filtering", Submitted for publication, (\*equal contributions)
 
 The repository provides functions to calculate SMATBIN filters for arbitrary spherical microphone array (SMA) configurations and head orientations as well as functions to generate the plots presented in the paper. Furthermore, the repository includes demo implementations for binaural rendering of simulated and measured (more complex) SMA data using the proposed SMATBIN filter approach as well as an integration example using the SoundScape Renderer [1].
 
