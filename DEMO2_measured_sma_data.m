@@ -22,13 +22,17 @@ clear all; close all; clc
 % Define array configuartions:
 c              = 343;    
 fs             = 48000;     
-smatbin_filter_length = 2048;   % Length of SMATBIN filters    
+smatbin_filter_length = 512;   % Length of SMATBIN filters    
 soft_limit     = 20;            % Soft-limit for radial filters in dB
 sofia_hp       = 1;             % Apply SOFiA's default high-pass at 30 Hz 
 
 % Load array impulse respones and specify the array geometry
-sfob = SOFAload('src/DRIR_CR1_VSA_50RS_L.sofa');
+% INFO: the present SMA ir set is a resampled set from the 44th order
+% measurement. The original 44th order set can be found at 
+% zenodo repo follows ....
+sfob = SOFAload('src/DRIR_Classroom_LSC_SMA_P1_lbdv50_spatres.sofa');
 drirs = squeeze(sfob.Data.IR);
+
 N_grid = 5;
 [grid_data_sma] = get_sampling_grid('lebedev', N_grid);
 
