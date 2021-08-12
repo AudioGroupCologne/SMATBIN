@@ -103,7 +103,6 @@ radial_filters = radial_filters(:, 1:round(size(radial_filters, 2)/2)+1);
 [BRTFs_sofia_l, BRTFs_sofia_r] = sofia_binauralX(DRTFs_sma_nm, radial_filters, head_or_eval(1), 1, sofia_hp); %Lebedev composite grid (virtual loudspeakers)
 
 %% Plots
-
 % Bring to same length
 brirs_sofia = cat(3, sofia_tdt(BRTFs_sofia_l), sofia_tdt(BRTFs_sofia_r));
 if size(brirs_smatbin, 2) <= size(brirs_sofia, 2) 

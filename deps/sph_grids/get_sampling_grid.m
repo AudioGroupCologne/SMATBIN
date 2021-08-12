@@ -14,7 +14,7 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
 %    convention:    'col' : theta ranging from 0 to 180, as it is used by
 %                           miro, sofia, ...
 %                   'el' : theta ranging from 90 to 0 to -90, as it is used
-%                          by SOFA convention, ... 
+%                          by SOFA convention, ...
 %                   {default: 'col'}
 %    plot:          plot sampling scheme {default: false}
 %
@@ -26,7 +26,7 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
 %   num_nodes: number of sampling positions
 %
 %   N_sg: order of the sampling scheme
-% 
+%
 %   radius: radius of the spherical microphone array in case its specified
 %           by the sampling scheme
 %
@@ -75,7 +75,7 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
        if any(strcmpi(grid_type, {'gauss', 'lebedev', 'fliege', 'extremal', 'equiangular'}))
             N = 1;
             disp('WARNING: sampling grid order N is not specified, use N=1');
-       elseif strcmpi(grid_type, 'eigenmike32') 
+       elseif strcmpi(grid_type, 'eigenmike32')
             N = 4;
             disp('WARNING: eigenmike32 is for order N=4');
        elseif strcmpi(grid_type, 'zylia')
@@ -95,14 +95,14 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
     if nargin < 5 || isempty(plot)
         plot = 0;
     end
-    
+
     %%
     if strcmpi(grid_type, 'gauss')
         az_nodes = 2 * (N+1);
         el_nodes = az_nodes/2;
         [grid_data, num_nodes, N_sg] = sofia_gauss(az_nodes, el_nodes, 0);
         radius = [];
-        
+
     elseif strcmpi(grid_type, 'lebedev')
         lbdv_degree = lbdv_num_nodes(lbdv_order == N);
         if ~isempty(lbdv_degree)
@@ -115,7 +115,7 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
             [grid_data, num_nodes, N_sg] = sofia_lebedev(lbdv_degree_next, 0);
         end
         radius = [];
-        
+
     elseif strcmpi(grid_type, 'fliege')
         if N > 29
             disp('WARNING: Sorry, we just implemented Fliege grid orders up to 29.')
@@ -125,17 +125,17 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
         grid_cart = fliegeNodes{N+1}(:, 1:3);
         [grid_data(:, 1), grid_data(:, 2)] = ...
                 cart2sph(grid_cart(:, 1), grid_cart(:, 2), grid_cart(:, 3));
-        % make azimuth ranging from zero to 2 pi    
+        % make azimuth ranging from zero to 2 pi
         grid_data(:, 1) = mod(grid_data(:, 1) + 2*pi, 2*pi);
         % make colatitudes from elevations
         grid_data(:, 2) = pi/2 - grid_data(:, 2);
         % calc weights
         grid_data(:, 3) = fliegeNodes{N+1}(:, 4) ./ sum(fliegeNodes{N+1}(:, 4));
-    
+
         num_nodes = size(grid_data, 1);
         N_sg  = N;
         radius = [];
-        
+
     elseif strcmpi(grid_type, 'extremal')
         if N > 100
             disp('WARNING: Sorry, so far we just implemented extremal grid orders up to 100.')
@@ -144,12 +144,12 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
         load('extremalNodes_1_100.mat', 'extremalNodes');
         grid_data = deg2rad(extremalNodes{N}(:, 1:2));
         % get weights
-        grid_data(:, 3) = deg2rad(extremalNodes{N}(:, 3));
-    
+        grid_data(:, 3) = extremalNodes{N}(:, 3);
+
         num_nodes = size(grid_data, 1);
         N_sg  = N;
         radius = [];
-        
+
     elseif strcmpi(grid_type, 'equiangular')
         if N > 44
             disp('WARNING: Sorry, so far we just implemented equiangular grid orders up to 44.')
@@ -160,21 +160,21 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
         % calc weights
         grid_data(:, 3) = 1/size(grid_data, 1) .* ones(size(grid_data, 1), 1);
         disp('WARNING: Eqiangular grids dont have quadrature weights.')
-    
+
         num_nodes = size(grid_data, 1);
         N_sg  = N;
         radius = [];
-        
+
     elseif strcmpi(grid_type, 'eigenmike32')
         if ~isempty(N) && N ~= 4
             disp('WARNING: Eigenmike just supports 32 sampling point grid, for SH processing up to order 4.')
         end
         grid_data = getEigenmikeNodes('rad', 0);
         grid_data(:, 2) = pi/2 - grid_data(:, 2);
-        num_nodes = 32; 
+        num_nodes = 32;
         N_sg = 4;
         radius = 0.042;
-        
+
     elseif strcmpi(grid_type, 'hosma')
         if ~isempty(N) && N ~= 7
             disp('WARNING: Hosma just supports 64 sampling point grid for SH processing up to order 7.')
@@ -184,11 +184,11 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
         grid_data(:, 1:2) = deg2rad(grid_data(:, 1:2));
         % make colatitudes from elevations
         grid_data(:, 2) = pi/2 - grid_data(:, 2);
-        
-        num_nodes = 64; 
+
+        num_nodes = 64;
         N_sg = 7;
         radius = 0.11;
-        
+
     elseif strcmpi(grid_type, 'zylia')
         if ~isempty(N) && N ~= 3
             disp('WARNING: Zylia just supports 19 sampling point grid for SH processing up to order 3.')
@@ -197,29 +197,29 @@ function [grid_data, num_nodes, N_sg, radius] = get_sampling_grid( ...
         % zylia  x
         grid_data_cart(:, 1) = zylia_grid_cart(:, 1);
         grid_data_cart(:, 2) = zylia_grid_cart(:, 2);
-        grid_data_cart(:, 3) = zylia_grid_cart(:, 3);   
-        
+        grid_data_cart(:, 3) = zylia_grid_cart(:, 3);
+
         [grid_data(:, 1), grid_data(:, 2), grid_data(:, 3)]  = ...
             cart2sph(grid_data_cart(:, 1), grid_data_cart(:, 2), grid_data_cart(:, 3) );
         grid_data(:, 1) = mod(grid_data(:, 1) + 2*pi, 2*pi);
         % make colatitudes from elevations
         grid_data(:, 2) = pi/2 - grid_data(:, 2);
-        % weights 
+        % weights
         grid_data(:, 3) = 1/size(grid_data, 1) .* ones(size(grid_data, 1), 1);
         disp('WARNING: Zylia grid dont has specified quadrature weights.')
-        
-        num_nodes = 19; 
-        N_sg = 3; 
+
+        num_nodes = 19;
+        N_sg = 3;
         radius = 0.049;
-        
+
     elseif strcmpi(grid_type, 'horizontal')
         disp('WARNING: Return 360 directions around the horizontal plane without weights.')
         grid_data = deg2rad([(0:1:359)', 90*ones(360, 1)]);
-        
+
     else
-        error('Grid type not implemented so far.') 
+        error('Grid type not implemented so far.')
     end
-    
+
     %%
     if strcmpi(convention, 'el')
         % Convert to elevation
