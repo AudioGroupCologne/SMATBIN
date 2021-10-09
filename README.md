@@ -1,8 +1,8 @@
 ## SMATBIN - Spherical Microphone Array To Binaural
 This repository contains the Matlab implementation of the SMATBIN filter approach, proposed in:  
-> J.M. Arend\*, T. Lübeck\*, and C. Pörschmann\*, "Efficient binaural rendering of spherical microphone array data by linear filtering", Submitted for publication, (\*equal contributions)
+> Arend\*, J. M., Lübeck\*, T., & Pörschmann\*, C. (in press). Efficient binaural rendering of spherical microphone array data by linear filtering. *EURASIP J. Audio Speech Music Process.* (\*equal contributions)
 
-The repository provides functions to calculate SMATBIN filters for arbitrary spherical microphone array (SMA) configurations and head orientations as well as functions to generate the plots presented in the paper. Furthermore, the repository includes demo implementations for binaural rendering of simulated and measured (more complex) SMA data using the proposed SMATBIN filter approach as well as an integration example using the SoundScape Renderer [1].
+The repository provides functions to calculate SMATBIN filters for arbitrary spherical microphone array (SMA) configurations and head orientations as well as functions to generate basic results plots presented in the paper. Furthermore, the repository includes demo implementations for binaural rendering of simulated and measured (more complex) SMA data using the proposed SMATBIN filter approach as well as an integration example using the SoundScape Renderer [1].
 
 ## Dependencies:
 * [SOFiA toolbox](https://github.com/AudioGroupCologne/SOFiA)
@@ -29,7 +29,7 @@ SMATBIN filters and SOFiA rendering chain (virtual loudspeaker approach) applied
 Calculation of SMATBIN filters for a 19 channel Zylia ZM-1 SMA, which can be used for real-time dynamic binaural synthesis of Zylia ZM-1 captures using the SoundScape Renderer (SSR) [1].
 
 * `DEMO_gen_SMATBIN_for_SSR.m` calculates and exports SMATBIN filters for 360 horizontal head orientations in the SSR-BRS format. Additionally, a `*.asd` file (SSR scene description) is generated, which can be loaded with the SSR
-* Using a Jack server [3], the SMA signals can be routet to the SSR
+* Using a JACK server [3], the SMA signals can be routed to the SSR
 
 #### Screenshot of the Jack routing and the SSR
 <img src="src/.doc/Smatbin_zylia_filters_SSR_screenshot.png" alt="Overview" width="650"/>
@@ -37,6 +37,6 @@ Calculation of SMATBIN filters for a 19 channel Zylia ZM-1 SMA, which can be use
 ## REFERENCES:
 [1] M. Geier, J. Ahrens, and S. Spors, “The SoundScape Renderer: A Unified Spatial Audio Reproduction Framework for Arbitrary Rendering Methods,” in Proceedings of the 124th AES Convention, Amsterdam, The Netherlands, 2008, pp. 1–6.
 
-[2] T. Lübeck, J. M. Arend, and C. Pörschmann, “A High-Resolution Spatial Room Impulse Response Database,” in Proceedings of the 47th DAGA, Vienna, Austria, 2021, pp. 1–4.
+[2] T. Lübeck, J. M. Arend, and C. Pörschmann, “A High-Resolution Spatial Room Impulse Response Database,” in Proceedings of the 47th DAGA, Vienna, Austria, 2021, pp. 1604-1607.
 
 [3] https://jackaudio.org
